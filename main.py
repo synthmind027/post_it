@@ -11,10 +11,19 @@ ts = time.time()
 mouse = (0,0)
 cursor_trail = []
 
-def render():
-	global cursor_trail
+
+
+while True:
+	e = pygame.event.wait(30) # 30 ms
+	if e.type == pygame.QUIT:
+		break
+	elif e.type == pygame.MOUSEMOTION:
+		mouse = e.pos
+		cursor_trail.append((mouse,time.time()))
+	
+
 	if ts + 1/FPS > time.time():
-		return
+		continue
 
 	screen.fill((0,0,0))
 
@@ -54,13 +63,3 @@ def render():
 	pygame.draw.rect(screen, G, (mouse[0],mouse[1],3,3))
 	
 	pygame.display.flip()
-
-
-while True:
-	e = pygame.event.wait(30) # 30 ms
-	if e.type == pygame.QUIT:
-		break
-	elif e.type == pygame.MOUSEMOTION:
-		mouse = e.pos
-		cursor_trail.append((mouse,time.time()))
-	render()
